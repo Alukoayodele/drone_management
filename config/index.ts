@@ -1,0 +1,11 @@
+import 'dotenv/config';
+
+export const config = {
+    db: {
+        username: process.env.db_username,
+        password: process.env.db_password,
+        host: process.env.db_host,
+        port: Number(process.env.db_port),
+        name: process.env.db_name,
+    },
+};

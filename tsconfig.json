@@ -1,0 +1,28 @@
+{
+  "ts-node": {
+    "files": true
+  },
+    "compilerOptions": {
+      "target": "es2016",
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
+      "module": "commonjs",
+      "baseUrl": "./",
+      "paths": {
+        "@dm/*": ["libs/*"],
+        "@config": ["config/index"],
+        "@exceptions": ["src/exceptions/index"],
+        "@resources/*": ["src/resources/*"],
+
+      },
+      "outDir": "./dist",
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+      "strict": true,
+      "noImplicitAny": true,
+      "strictNullChecks": true,
+      "strictPropertyInitialization": false,
+      "resolveJsonModule": true
+    }
+  }
+  

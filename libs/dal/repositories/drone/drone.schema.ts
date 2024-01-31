@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
 import { Fleet } from './fleet.schema';
-import { DroneStateEnum } from './type';
+import { DroneModelEnum, DroneStateEnum } from './type';
+import { Medication } from '../medication';
 
 @Entity('drone')
 export class Drone {
@@ -10,8 +11,11 @@ export class Drone {
     @Column({ length: 100 })
     serialNumber: string;
 
-    @Column()
-    model: string;
+    @Column({
+        type: 'enum',
+        enum: DroneModelEnum
+    })
+    model: DroneModelEnum;
 
     @Column()
     weightLimit: number;
@@ -28,5 +32,8 @@ export class Drone {
 
     @ManyToOne(() => Fleet, fleet => fleet.drones)
     fleet: Fleet;
+
+    @OneToMany(() => Medication, medication => medication.drone)
+    medications: Medication[];
 
 }

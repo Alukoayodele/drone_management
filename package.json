@@ -9,7 +9,6 @@
     "test": "jest",
     "build": "rm -rf dist && tsc",
     "prestart": "yarn build",
-    "seed": "ts-node libs/dal/db/seed.ts",
     "start": "node -r module-alias/register dist/src/server.js",
     "dev": "nodemon -r tsconfig-paths/register src/server.ts",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/.bin/typeorm",
@@ -25,6 +24,7 @@
     "pg": "^8.11.3",
     "typeorm": "^0.3.20",
     "typeorm-extension": "^3.4.0",
+    "typeorm-naming-strategies": "^4.1.0",
     "yup": "^1.3.3"
   },
   "devDependencies": {

@@ -1,8 +1,14 @@
-import { DalService } from '../libs/dal/dal.service'
+import { AppDataSource } from '@dm/dal/datasource';
+import FleetUsecases from '@resources/drone/fleet.usecases';
 
 const initializeDb = async () => {
-    const dalService = new DalService();
-    await dalService.connect();
+    try {
+        await AppDataSource.initialize()
+        await new FleetUsecases().createFleetIfNotExists()
+        console.log('Connected to the Database successfully')
+    } catch (error) {
+        console.log(error)
+    }
 };
 
-initializeDb();
+export default initializeDb;

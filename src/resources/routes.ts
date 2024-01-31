@@ -6,7 +6,7 @@ const routes = (app: Express) => {
         res.status(200).json({ message: 'Welcome to Our Drone Management System' })
     });
 
-    app.use('api/v1', [
+    app.use('/api/v1', [
         droneRoutes
     ]);
 

@@ -6,3 +6,10 @@ export enum DroneStateEnum {
     DELIVERED = 'DELIVERED',
     RETURNING = 'RETURNING'
 }
+
+export enum DroneModelEnum {
+    LIGHTWEIGHT = 'Lightweight',
+    MIDDLEWEIGHT = 'Middleweight',
+    CRUISERWEIGHT = 'Cruiserweight',
+    HEAVYWEIGHT = 'Heavyweight'
+}

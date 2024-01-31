@@ -1,20 +1,24 @@
-// src/models/Medication.ts
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Drone } from '../drone';
 
 @Entity('medication')
 export class Medication {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({ type: 'varchar', length: 100 })
     name: string;
 
-    @Column()
+    @Column({ type: 'float' })
     weight: number;
 
-    @Column()
+    @Column({ type: 'varchar', length: 10 })
     code: string;
 
-    @Column()
+    @Column({ type: 'varchar', length: 255 })
     image: string;
+
+    @ManyToOne(() => Drone, drone => drone.medications)
+    drone: Drone;
 }
+

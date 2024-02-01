@@ -44,21 +44,27 @@ class DroneUsecases {
         if (totalWeightToLoad > drone.weightLimit) throw new BadRequest('Total weight exceeds the drone limit');
 
         if (drone.batteryCapacity < 25) throw new BadRequest('Drone battery level is below 25%');
+        const droneMedication: Medication[] = []
 
         const loadedMedications = medications.map((medicationData) => {
-            const medication: Medication = {
-                id: medicationData.id,
+            const medication: MedicationInput = {
                 image: medicationData.image,
                 code: medicationData.code,
                 name: medicationData.name,
                 weight: medicationData.weight,
-                drone
             }
             return medication
         })
 
-        await this.medicationUsecases.addMedications(loadedMedications);
+        const medicationData = await this.medicationUsecases.addMedications(loadedMedications, drone);
 
+        for (const id of medicationData) {
+            const newDroneMedication = await this.medicationUsecases.findMedication(id);
+            droneMedication.push(newDroneMedication!);
+        }
+        if (droneMedication.length > 0) {
+            drone.medications = [...droneMedication]
+        }
         drone.state = DroneStateEnum.LOADED;
         await this.droneRepository.save(drone);
 
@@ -71,6 +77,10 @@ class DroneUsecases {
     }
     async findDroneById(droneId: number) {
         return await this.droneRepository.findOne({ id: droneId }, { relations: ['medications'] })
+    }
+
+    async findDroneLoadedDrone(droneId: number) {
+        return await this.droneRepository.findOne({ id: droneId, state: DroneStateEnum.LOADED }, { relations: ['medications'] })
     }
 }
 

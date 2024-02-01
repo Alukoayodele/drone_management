@@ -17,6 +17,5 @@ export const loadDroneSchema = object({
         weight: number().required(),
         code: string().required(),
         image: string().required(),
-        id: number().required(),
     }))
 })

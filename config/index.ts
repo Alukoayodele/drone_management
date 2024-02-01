@@ -8,4 +8,8 @@ export const config = {
         port: Number(process.env.db_port),
         name: process.env.db_name,
     },
+    cron: {
+        manageBatteryLevel: process.env.MANAGE_BATTERY_LEVEL_SCHEDULE!,
+        batteryLevelChecker: process.env.BATTERY_LEVEL_CHECKER_SCHEDULE!,
+    }
 };

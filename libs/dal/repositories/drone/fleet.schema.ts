@@ -9,6 +9,6 @@ export class Fleet {
     @Column({ length: 100 })
     name: string;
 
-    @OneToMany(() => Drone, drone => drone.fleet)
+    @OneToMany(() => Drone, drones => drones.fleet)
     drones: Drone[];
 }

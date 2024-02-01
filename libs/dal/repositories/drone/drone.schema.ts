@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'ty
 import { Fleet } from './fleet.schema';
 import { DroneModelEnum, DroneStateEnum } from './type';
 import { Medication } from '../medication';
+import { BatteryLog } from './droneBattery.schema';
 
 @Entity('drone')
 export class Drone {
@@ -30,10 +31,13 @@ export class Drone {
     })
     state: DroneStateEnum;
 
-    @ManyToOne(() => Fleet, fleet => fleet.drones)
+    @ManyToOne(() => Fleet, (fleet) => fleet.drones)
     fleet: Fleet;
 
-    @OneToMany(() => Medication, medication => medication.drone)
+    @OneToMany(() => Medication, (medications) => medications.drone)
     medications: Medication[];
+
+    @OneToMany(() => BatteryLog, batteryLogs => batteryLogs.drone)
+    batteryLogs: BatteryLog[];
 
 }

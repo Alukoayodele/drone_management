@@ -15,6 +15,22 @@ class DroneController {
         this.loadDroneCommand = new BaseCommand(loadDroneSchema);
     }
 
+    async view(req: Request, res: Response, next: NextFunction) {
+        try {
+            const droneId = parseInt(req.params.droneId, 10);
+            const drone = (await this.droneUsecases.findDroneById(droneId)) as Drone;
+
+            res.status(200).json({
+                status: 'success',
+                message: "Drone's details fetched successfully",
+                data: drone
+            })
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     async register(req: Request, res: Response, next: NextFunction) {
         try {
             const command = this.createDroneCommand.execute(req.body);
@@ -35,7 +51,7 @@ class DroneController {
         try {
             const command = this.loadDroneCommand.execute(req.body);
 
-            const { droneId, medications } = command
+            const { droneId, medications } = command;
 
             await this.droneUsecases.loadDrone(droneId, medications);
 
@@ -52,7 +68,7 @@ class DroneController {
     async loadedMedications(req: Request, res: Response, next: NextFunction) {
         try {
             const droneId = parseInt(req.params.droneId, 10);
-            const { medications } = (await this.droneUsecases.findDroneById(droneId)) as Drone;
+            const { medications } = (await this.droneUsecases.findDroneLoadedDrone(droneId)) as Drone;
 
             res.status(200).json({
                 status: 'success',
@@ -86,7 +102,9 @@ class DroneController {
             res.status(200).json({
                 status: 'success',
                 message: "Drone's battery capacity fetched successfully",
-                data: `${serialNumber} is currently at ${batteryCapacity}%`,
+                data: {
+                    batteryLevel: `${serialNumber} is currently at ${batteryCapacity}%`,
+                }
             })
         } catch (error) {
             next(error)

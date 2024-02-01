@@ -3,8 +3,8 @@ import 'reflect-metadata';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { config } from '@config';
 import { DataSource } from 'typeorm';
-import { Drone, Fleet, Medication } from './repositories';
-import { InitializedDroneManagement1706714075919 } from './migrations/1706714075919-initialized-drone-management';
+import { BatteryLog, Drone, Fleet, Medication } from './repositories';
+import { InitializedDroneManagement1706730722011 } from './migrations/1706730722011-initialized-drone-management';
 
 
 export const AppDataSource = new DataSource({
@@ -16,8 +16,8 @@ export const AppDataSource = new DataSource({
     database: config.db.name,
     migrationsRun: true,
     logging: true,
-    entities: [Drone, Fleet, Medication],
-    migrations: [InitializedDroneManagement1706714075919],
+    entities: [Drone, Fleet, Medication, BatteryLog],
+    migrations: [InitializedDroneManagement1706730722011],
     namingStrategy: new SnakeNamingStrategy(),
     extra: {
         // max connection pool size

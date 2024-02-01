@@ -18,7 +18,7 @@ export class Medication {
     @Column({ type: 'varchar', length: 255 })
     image: string;
 
-    @ManyToOne(() => Drone, drone => drone.medications)
+    @ManyToOne(() => Drone, (drone) => drone.medications)
     drone: Drone;
 }
 

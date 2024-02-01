@@ -1,8 +1,10 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
 import { Fleet } from './fleet.schema';
-import { DroneModelEnum, DroneStateEnum } from './type';
 import { Medication } from '../medication';
 import { BatteryLog } from './droneBattery.schema';
+import { DroneModelEnum, DroneStateEnum } from './type';
+
+
 
 @Entity('drone')
 export class Drone {

@@ -1,9 +1,25 @@
+version: "3"
+
 services:
   db:
-    image: postgres:latest
+    image: postgres:16.1-alpine
     ports:
       - "5432:5432"
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=123
       - POSTGRES_DB=drone_management
+
+  drone_management:
+    image: drone_management
+    container_name: drone_management
+    build:
+      context: .
+    depends_on:
+      db:
+        condition: service_started
+    env_file:
+      - ./.env-example
+    ports:
+      - 4000:4000
+    restart: on-failure

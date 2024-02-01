@@ -2,40 +2,27 @@
 
 ## Table of Contents
 
-- [Pre-Installation](#preinstallation)
+- [Prerequisites](#preinstallation)
 - [Installation](#installation)
 
-## Pre-Installation
+### Prerequisites
 
-Kindly follow this steps to install "PostgresQL" on docker
-
-- Download Docker Decktop
-- Signin/ Signup to Docker Hub https://hub.docker.com/
-- Search for "postgres" image
-- Follow the installation guide or watch this youtube video https://www.youtube.com/watch?v=Dm0CmZz-QyI
-
-After successful installation of postgres on your local machine
-
-Run this bash script to start up postgres
-
-```bash
-## Pre-Installation
-docker compose up
-
-```
-
-Once postgres is up and run on docker
-Create a .env file(kindly refer to .env-example for the enivornment variable's examples)
+- Node.js (>= v12)
+- Docker
 
 ## Installation
 
-These are the step by step command to start the project.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ```bash
 git clone https://github.com/Alukoayodele/drone_management.git
-cd drone_management
-yarn run install
-yarn run dev # To run the project in development mode
-yarn run build
-yarn run start # To run the built project
+```
+
+Run Docker compose
+
+```bash
+docker-compose up --build
+
+# OR run detached
+docker-compose up --build -d
 ```

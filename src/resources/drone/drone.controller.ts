@@ -68,7 +68,7 @@ class DroneController {
     async loadedMedications(req: Request, res: Response, next: NextFunction) {
         try {
             const droneId = parseInt(req.params.droneId, 10);
-            const { medications } = (await this.droneUsecases.findDroneLoadedDrone(droneId)) as Drone;
+            const { medications } = await this.droneUsecases.findDroneLoadedDrone(droneId);
 
             res.status(200).json({
                 status: 'success',

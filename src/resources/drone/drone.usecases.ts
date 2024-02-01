@@ -1,8 +1,8 @@
 import { Drone, DroneRepository, Fleet, Medication } from '@dm/dal';
-import { DroneStateEnum } from '@dm/dal/repositories/drone/type';
+import { DroneModelEnum, DroneStateEnum } from '@dm/dal/repositories/drone/type';
 import { CreateDroneCommand } from './types';
 import FleetUsecases from './fleet.usecases';
-import { BadRequest } from '@exceptions';
+import { BadRequest, NotFoundError } from '@exceptions';
 import MedicationUsecases from '@resources/medication/medication.usecases';
 import { MedicationInput } from '@resources/medication/type';
 
@@ -76,11 +76,47 @@ class DroneUsecases {
         })
     }
     async findDroneById(droneId: number) {
-        return await this.droneRepository.findOne({ id: droneId }, { relations: ['medications'] })
+        const drone = await this.droneRepository.findOne({ id: droneId }, { relations: ['medications'] })
+        if (!drone) throw new NotFoundError(`Drone with id: ${droneId} does not exist`)
+        return drone
     }
 
     async findDroneLoadedDrone(droneId: number) {
-        return await this.droneRepository.findOne({ id: droneId, state: DroneStateEnum.LOADED }, { relations: ['medications'] })
+        const drone = await this.droneRepository.findOne({ id: droneId, state: DroneStateEnum.LOADED }, { relations: ['medications'] })
+        if (!drone) throw new NotFoundError(`Drone with id: ${droneId} does not exist`)
+        return drone
+    }
+
+    async registerDroneIfNotExist() {
+        const checkDrones = await this.droneRepository.find({});
+        const checkFleet = await this.fleetUsecases.findFleet()
+        if (checkDrones.length >= 1 && checkFleet.length >= 1) {
+            return;
+        }
+        const newDrone = {
+            serialNumber: "22344hdksyr",
+            model: DroneModelEnum.HEAVYWEIGHT,
+            weightLimit: 500,
+            batteryCapacity: 100,
+            fleetId: 1
+        }
+
+        const registerDrone = await this.registerDrone(newDrone)
+        const newMedication = [
+            {
+                weight: 50,
+                code: "HB-45887",
+                image: "yudoossjfhfh",
+                name: "Polo Vaccine"
+            },
+            {
+                weight: 450,
+                code: "HB-45889",
+                image: "yudoossjfhfh",
+                name: "Covid Vaccine"
+            }
+        ]
+        await this.loadDrone(registerDrone.id, newMedication)
     }
 }
 

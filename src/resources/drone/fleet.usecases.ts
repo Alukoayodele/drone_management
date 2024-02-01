@@ -1,10 +1,18 @@
 import { Fleet, FleetRepository } from '@dm/dal';
+import DroneUsecases from './drone.usecases';
+import { DroneModelEnum } from '@dm/dal/repositories/drone/type';
 class FleetUsecases {
     private fleetRepository;
 
 
     constructor() {
         this.fleetRepository = new FleetRepository()
+
+    }
+
+    async findFleet() {
+        return this.fleetRepository.find({})
+
     }
 
     async getFleetById(id: number) {
@@ -20,8 +28,9 @@ class FleetUsecases {
 
         const fleet = new Fleet();
         fleet.name = 'My first fleet';
-        const firstFleet = await this.fleetRepository.save(fleet);
-        console.log(`First Fleet created with fleet id :${firstFleet.id}`)
+        const newFleet = await this.fleetRepository.save(fleet);
+        console.log(`Database prepopulated`)
+        return newFleet;
     }
 }
 
